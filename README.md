@@ -7,3 +7,14 @@ Have fun playing.
 
 I wrote the program using python 3.7. No external programs
 were used.
+
+The games have been designed to be easy to complete. However,
+they can be adjusted to make them harder. Look at a json file.
+Some numbers are a single digit and others are two digits. The
+two digit numbers are "shifted to remove the zero" and then they
+become the visible starting numbers.
+
+To make the games harder, change a few numbers in each json file 
+from two digits to one digit. Example: 80 becomes 8, 10 becomes 1.
+Doing this will cause fewer starting numbers to be display, thus
+making the games harder.
