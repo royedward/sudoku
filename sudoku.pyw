@@ -1,23 +1,27 @@
+import json
 import tkinter as tk
 from tkinter import ttk
 from random import shuffle
 from tkinter.messagebox import showinfo
 from winsound import Beep
 
-import json
-
 # global variables
-master_numbers = None
-game_started = False
-nums = []
-file_name_index = list(range(1, 51))
-shuffle(file_name_index)
-correct_count = 0
-visible_nums = ['' for _ in range(0, 81)]
-# end on global variables
+
+num_of_games = 51           # number of games plus 1
+master_numbers = None       # correct value for each square
+game_started = False        # game staus
+nums = []                   # text variable index for gui square
+game_index = list(range(1, num_of_games))
+shuffle(game_index)         # radomized game numbers
+correct_count = 0           # count correct entries to determine if game is over
+visible_nums = ['' for _ in range(0, 81)]   # used to protect current entries
+index = 0                   # used during looping thru the squares
+json_info = []              # contains all the raw json information
+
+# end of global variables
 
 
-def popup_showinfo():
+def popup_you_won():
     showinfo("Congratulations!", "You Won The Game - Play Another Game")
 
 
@@ -34,21 +38,24 @@ def write_entry_values():
         d = master_numbers[i]
 
         if len(d) == 2:
-            d = d[0:1]
+            d = d[:1]
             nums[i].set(d)
             visible_nums[i] = d
             correct_count += 1
 
 
-def get_json_information(num):
-    global master_numbers, correct_count
+def setup_game():
+    global master_numbers, correct_count, game_index
     master_numbers = None
     correct_count = 0
-    file_id = str(num)
 
-    info = read_json_file('./json/sudoku/s' + file_id + '.json')
+    if len(game_index) == 0:
+        game_index = list(range(1, num_of_games))
+        shuffle(game_index)
 
-    d = info['sudoku']['row']
+    game_num = str(game_index.pop())
+    d = json_info['game' + game_num]
+
     string = ''
 
     for i in range(0, 9):
@@ -65,10 +72,10 @@ def clear_entries():
 
 
 def new_game():
-    global game_started, correct_count
+    global game_started
     game_started = False
     clear_entries()
-    get_json_information(file_name_index.pop())
+    setup_game()
     game_started = True
 
 
@@ -94,7 +101,7 @@ def trace(position, dummy_1, dummy_2):
         visible_nums[pos] = number_entered
 
         if correct_count == 81:
-            popup_showinfo()
+            popup_you_won()
             new_game()
 
 
@@ -108,7 +115,6 @@ monty.grid(column=0, row=0, pady=20, padx=20)
 gameFrame = ttk.LabelFrame(monty)
 gameFrame.grid(column=1, row=1, pady=20, padx=30)
 
-index = 0
 
 for row in range(0, 11):
 
@@ -136,8 +142,8 @@ for row in range(0, 11):
 ttk.Button(monty, text='Play New Game', command=new_game,
            width=40).grid(column=1, row=2, pady=10, padx=10, ipady=4)
 
-get_json_information(file_name_index.pop())
+json_info = read_json_file('./sudoku.json')
+setup_game()
 game_started = True
 
-if __name__ == "__main__":
-    win.mainloop()
+win.mainloop()
