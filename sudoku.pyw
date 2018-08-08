@@ -13,13 +13,13 @@ num_of_games = 51
 # correct value for each square
 master_numbers = None
 
-# game staus
+# game status
 game_started = False
 
 # text variable index for gui square
 nums = []
 
-# radomized game numbers
+# randomized game numbers
 game_index = list(range(1, num_of_games))
 shuffle(game_index)
 
