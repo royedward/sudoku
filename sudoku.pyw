@@ -7,16 +7,33 @@ from winsound import Beep
 
 # global variables
 
-num_of_games = 51           # number of games plus 1
-master_numbers = None       # correct value for each square
-game_started = False        # game staus
-nums = []                   # text variable index for gui square
+# number of games plus 1
+num_of_games = 51
+
+# correct value for each square
+master_numbers = None
+
+# game staus
+game_started = False
+
+# text variable index for gui square
+nums = []
+
+# radomized game numbers
 game_index = list(range(1, num_of_games))
-shuffle(game_index)         # radomized game numbers
-correct_count = 0           # count correct entries to determine if game is over
-visible_nums = ['' for _ in range(0, 81)]   # used to protect current entries
-index = 0                   # used during looping thru the squares
-json_info = []              # contains all the raw json information
+shuffle(game_index)
+
+# count correct entries to determine if game is over
+correct_count = 0
+
+# used to protect current entries
+visible_nums = ['' for _ in range(0, 81)]
+
+# used during looping thru the squares
+index = 0
+
+# contains all the raw json information
+json_info = []
 
 # end of global variables
 
@@ -32,7 +49,7 @@ def read_json_file(path):
 
 
 def write_entry_values():
-    global correct_count
+    global correct_count, visible_nums
 
     for i in range(0, 81):
         d = master_numbers[i]
@@ -66,6 +83,7 @@ def setup_game():
 
 
 def clear_entries():
+    global visible_nums
     for i in range(0, 81):
         nums[i].set('')
         visible_nums[i] = ''
@@ -80,7 +98,7 @@ def new_game():
 
 
 def trace(position, dummy_1, dummy_2):
-    global correct_count
+    global correct_count, visible_nums
 
     if not game_started:
         return
