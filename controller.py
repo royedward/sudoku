@@ -44,7 +44,8 @@ class Controller:
 
         if len(self.game_index) == 0:
             self.game_index = list(range(1, self.num_of_games))
-            shuffle(self.game_index)
+            for i in range(0, 6):
+                shuffle(self.game_index)
 
         game_num = str(self.game_index.pop())
         d = self.json_info['game' + game_num]
