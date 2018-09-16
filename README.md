@@ -6,7 +6,7 @@ a user will not remember a given game.
 
 Have fun playing.
 
-I wrote the program using python 3.7. No external programs
+Wrote program using python 3.7. No external programs
 were used.
 
 The games have been designed to be easy to complete. However,
